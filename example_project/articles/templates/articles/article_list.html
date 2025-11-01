@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Усі статті{% endblock %}
+{% block content %}
+<h1>Усі статті</h1>
+<ul>
+  {% for a in articles %}
+    <li><a href="{% url 'articles:detail' a.pk %}">{{ a.title }}</a> ({{ a.category.title }})</li>
+  {% endfor %}
+</ul>
+{% endblock %}

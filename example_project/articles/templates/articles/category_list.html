@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Категорії{% endblock %}
+{% block content %}
+<h1>Категорії</h1>
+<ul>
+  {% for c in categories %}
+    <li><i class="{{ c.icon }}"></i> {{ c.title }} — {{ c.description }}</li>
+  {% empty %}<li>Немає категорій.</li>{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+<h1>{{ article.title }}</h1>
+<p>Автор: {{ article.author }} | {{ article.publication_date }}</p>
+<p>Категорія: <i class="{{ article.category.icon }}"></i> {{ article.category.title }}</p>
+{% if article.image %}<p><img src="{{ article.image }}" width="480"></p>{% endif %}
+<p>{{ article.text }}</p>
+
+<h2>Коментарі</h2>
+<ul>
+  {% for c in article.comments.all %}
+    <li><b>{{ c.author }}</b>: {{ c.text }} ({{ c.publication_date }})</li>
+  {% empty %}<li>Поки немає коментарів.</li>{% endfor %}
+</ul>
+
+<h3>Додати коментар</h3>
+<form method="post" action="{% url 'articles:comment' article.pk %}">
+  {% csrf_token %}
+  <p>Ім’я: <input name="author" required></p>
+  <p>Текст: <textarea name="text" required></textarea></p>
+  <button type="submit">Надіслати</button>
+</form>
+{% endblock %}

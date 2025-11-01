@@ -1,0 +1,9 @@
+<!doctype html><html lang="uk"><head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Blog{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head><body>
+  <nav><a href="/">Головна</a> | <a href="/articles/">Усі статті</a> | <a href="/categories/">Категорії</a></nav>
+  <hr>
+  {% block content %}{% endblock %}
+</body></html>
