@@ -3,7 +3,14 @@
   <title>{% block title %}Blog{% endblock %}</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head><body>
-  <nav><a href="/">Головна</a> | <a href="/articles/">Усі статті</a> | <a href="/categories/">Категорії</a></nav>
+  <nav>
+    <a href="/">Головна</a> | <a href="/articles/">Усі статті</a> | <a href="/categories/">Категорії</a> |
+    {% if user.is_authenticated %}
+      Вітаємо, {{ user.username }} | <a href="{% url 'accounts:logout' %}">Вихід</a>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Вхід</a> | <a href="{% url 'accounts:register' %}">Реєстрація</a>
+    {% endif %}
+  </nav>
   <hr>
   {% block content %}{% endblock %}
 </body></html>

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Редагувати коментар{% endblock %}
+
+{% block content %}
+<h2>Редагувати коментар</h2>
+<form method="post">
+  {% csrf_token %}
+  <p>Текст: <textarea name="text" required>{{ comment.text }}</textarea></p>
+  <button type="submit">Зберегти</button>
+</form>
+{% endblock %}

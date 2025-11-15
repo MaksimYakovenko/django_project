@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -21,9 +22,16 @@ class Tag(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=250)
-    author = models.CharField(max_length=120)  # як звичайний рядок
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        related_name="articles",
+        on_delete=models.SET_NULL,
+        help_text="Registered user who authored the article",
+    )
+    author = models.CharField(max_length=120, blank=True)
     text = models.TextField()
-    # image = посилання на картинку
     image = models.URLField(blank=True)
     publication_date = models.DateField(default=timezone.now)
     is_published = models.BooleanField(default=True)
@@ -40,10 +48,21 @@ class Article(models.Model):
 
 class Comment(models.Model):
     text = models.TextField()
-    author = models.CharField(max_length=120)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        related_name="comments",
+        on_delete=models.SET_NULL,
+        help_text="Registered user who authored the comment",
+    )
+    author = models.CharField(max_length=120, blank=True)
     publication_date = models.DateField(default=timezone.now)
-    article = models.ForeignKey(Article, related_name="comments",
-                                on_delete=models.CASCADE)
+    article = models.ForeignKey(
+        Article,
+        related_name="comments",
+        on_delete=models.CASCADE,
+    )
 
     class Meta:
         ordering = ["-publication_date", "-id"]
